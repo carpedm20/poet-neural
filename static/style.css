@@ -5,10 +5,14 @@
 @import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
 
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 #title {
   font-family: 'Nanum Myeongjo', sans-serif;
   /*font-family: 'Nanum Gothic', sans-serif;*/
-  font-size: 180px;
+  font-size: 12vw;
+  line-height: 12vw;
   font-weight: normal;
   color: #ff4200;
   margin: 0;
@@ -19,15 +23,15 @@
 }
 
 .splash {
-  width: 80%;
+  width: 90%;
 }
 
 .content-wrapper {
-  top: 100%;
+  top: 80%;
 }
 
 .splash-container {
-  height: 100%;
+  height: 80%;
 }
 
 .container {
@@ -38,8 +42,16 @@
 }
 
 .home-menu {
-  padding: 10px 40px 10px 40px;
+  padding: 15px 10% 15px 10%;
   background-color: #181818;
+  -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+  -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+  transition: background .5s ease-in-out,padding .5s ease-in-out;
+}
+
+.top-nav-collapse {
+  padding: 8px 10% 8px 10%;
+  background-color: rgba(0,0,0,0.9);
 }
 
 .intro {
@@ -89,3 +101,43 @@
   font-size: 1.2em;
   text-shadow: 0 0 5px #000;
 }
+
+.pure-menu-heading {
+  text-transform: none !important;
+}
+
+
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+  background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+p.carpedm a {
+  font-size: 1.4em;
+  color: #00de1a;
+  margin: 10px 0;
+  text-transform: none !important;
+  text-decoration: none !important;
+}
+

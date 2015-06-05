@@ -1,7 +1,27 @@
+//jQuery to collapse the home-menu on scroll
+$(window).scroll(function() {
+    if ($(".splash").offset().top > 330) {
+        $(".home-menu").addClass("top-nav-collapse");
+    } else {
+        $(".home-menu").removeClass("top-nav-collapse");
+    }
+});
+
+//jQuery for page scrolling feature - requires jQuery Easing plugin
+$(function() {
+    $('.page-scroll a').bind('click', function(event) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+        }, 1500, 'easeInOutExpo');
+        event.preventDefault();
+    });
+});
+
 var theater = new TheaterJS();
 
 theater
-  .describe("Poet", { speed: .05, accuracy: 1, invincibility: 4 }, "#title")
+  .describe("Poet", { speed: .3, accuracy: 1, invincibility: 4 }, "#title")
 
 theater
   .on("*", function (eventName, originalEvent, sceneName, arg) {
@@ -36,5 +56,5 @@ theater
 
 
 theater
+  .write("Poet:인공지능 시팔이", 1000)
   .write("Poet:시인 뉴럴")
-  .write(400)
