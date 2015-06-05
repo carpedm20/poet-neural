@@ -1,0 +1,91 @@
+/****************
+ * html
+ ****************/
+
+@import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+
+#title {
+  font-family: 'Nanum Myeongjo', sans-serif;
+  /*font-family: 'Nanum Gothic', sans-serif;*/
+  font-size: 180px;
+  font-weight: normal;
+  color: #ff4200;
+  margin: 0;
+}
+
+.saying:after {
+  color: #f9da03;
+}
+
+.splash {
+  width: 80%;
+}
+
+.content-wrapper {
+  top: 100%;
+}
+
+.splash-container {
+  height: 100%;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.home-menu {
+  padding: 10px 40px 10px 40px;
+  background-color: #181818;
+}
+
+.intro {
+  display: table;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+}
+.intro-bg-filter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /*background: rgba(0,0,0,0.6);*/
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQIW2NkYGA4A8RwwAgVOAsVMcYpANcCAL12BTX+FvNLAAAAAElFTkSuQmCC) repeat;
+}
+.intro-bg-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.intro-body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.intro-text {
+  padding-top: 0px;
+  font-weight: 700;
+  font-size: 2.0em;
+  text-shadow: 0 0 5px #000;
+}
+
+.intro-text-sub {
+  color: #ccc;
+  font-weight: 100;
+  font-size: 1.2em;
+  text-shadow: 0 0 5px #000;
+}

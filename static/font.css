@@ -1,0 +1,26 @@
+@charset "utf-8"; 
+
+/*
+ * Hangeul NanumBarunGothic Font
+ */
+@font-face {
+ font-family: 'NanumBarunGothic';
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWeb.eot);
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWeb.eot?#iefix) format('embedded-opentype'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWeb.woff) format('woff'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWeb.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'NanumBarunGothicBold';
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWebBold.eot);
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWebBold.eot?#iefix) format('embedded-opentype'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWebBold.woff) format('woff'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothic/NanumBarunGothicWebBold.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'NanumBareunGothicUltraLight';
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothicL/NanumBarunGothicWebUltraLight_11172.eot);
+ src: url(http://hangeul.naver.com/webfont/NanumBarunGothicL/NanumBarunGothicWebUltraLight_11172.eot?#iefix) format('embedded-opentype'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothicL/NanumBarunGothicWebUltraLight_11172.woff) format('woff'),
+      url(http://hangeul.naver.com/webfont/NanumBarunGothicL/NanumBarunGothicWebUltraLight_11172.ttf) format('truetype');
+}

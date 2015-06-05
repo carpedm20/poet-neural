@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>All about Critics</title>
+  <meta name="keywords" content="all about critics,carpedm20,movie,visualization" />
+  <meta name="description" content="A data visualization of movie critics" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="All about Critics" />
+  <meta property="og:url" content="http://pail.unist.ac.kr/carpedm20/critics/"/>
+  <meta property="og:image" content="https://raw.githubusercontent.com/carpedm20/voxoffice/master/static/logo.png" />
+  <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+    
+      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-old-ie-min.css">
+    
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+    
+      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+  <!--<![endif]-->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+<!--[if lt IE 9]>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed container">
+      <a class="pure-menu-heading" href="">carpedm20</a>
+
+      <ul>
+        <li class="pure-menu-selected"><a href="#">시인 뉴럴</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="splash-container">
+    <div class="intro-bg">
+      <!--<div class="intro-bg-img" style="background-image: url('{{ url_for('static', filename='img/bg.jpg') }}')"></div>-->
+      <div class="intro-bg-img" style="background-color: #fbfff1"></div>
+    </div>
+    <div class="splash">
+      <h1 id="title"></h1>
+    </div>
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="{{ url_for('static', filename='js/theater.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+  </script>
+</body>
+</html>
