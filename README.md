@@ -2,7 +2,7 @@
 
 Poet who is born from Neural Network.
 
-Multi-layer LSTM for character-level language models in Torch (based on [this post](http://karpathy.github.io/2015/05/21/rnn-effectiveness/))
+Multi-layer LSTM for character-level language models in Torch (based on [this post](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)).
 
 
 Demo
