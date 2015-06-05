@@ -18,7 +18,9 @@ def root():
 def index():
     years = glob("./static/*.json")
 
-    return render_template('index.html')
+    poets = ["123","1231231"]
+
+    return render_template('index.html', poets=poets)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5004)

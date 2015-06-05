@@ -141,3 +141,27 @@ p.carpedm a {
   text-decoration: none !important;
 }
 
+article {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: #fff;
+  width: 100%;
+  height: 128px;
+  padding: 0 24px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  border-radius: 2px;
+}
+
+aside {
+  background: #1f8dd6;
+  padding: 0.3em 1em;
+  border-radius: 3px;
+  color: #fff;
+}
