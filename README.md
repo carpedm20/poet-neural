@@ -1,5 +1,4 @@
-시인 뉴럴
----------
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet.PNG)
 
 Poet who is born from Neural Network.
 
@@ -7,7 +6,6 @@ Poet who is born from Neural Network.
 Demo
 ----
 
-![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet.PNG)
 ![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet2.PNG)
 
 
