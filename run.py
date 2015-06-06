@@ -52,7 +52,7 @@ def nl2brlist(eval_ctx, value, is_list=False):
 
 def get_poets():
     with open('demo.txt') as f:
-        return re.sub('\n\n+', '\t', f.read()).decode('utf-8').split('\t')
+        return re.sub('\n\n+', '\t', f.read()).decode('utf-8', 'ignore').split('\t')
 
 poets = get_poets()
 
@@ -203,7 +203,7 @@ def make():
         if request.method == 'POST' and request.form['term']:
             out = check_output(command + ['-term'] + [request.form['term']])
             poets = re.sub('\n\n+', '\t', out).split('\t')
-            poet = request.form['term'].encode('utf-8') + poets[0]
+            poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
         else:
             out = check_output(command)
 
@@ -218,7 +218,7 @@ def make():
         hash_object = hashlib.sha1(poet)
         hex_dig = hash_object.hexdigest()
 
-        doc = {'text': poet.decode('utf-8'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+        doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
 
         _id = collection.insert(doc)
         item = list(collection.find({'_id':_id}))[0]

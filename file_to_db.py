@@ -13,10 +13,14 @@ db = client['neural']
 collection = db['poet']
 
 def get_poets():
-    #with open('demo.txt') as f:
-    with open('big_demo.txt') as f:
-        #return re.sub('\n\n+', '\t', f.read()).decode('utf-8').split('\t')
-        return re.sub('\n\n+', '\t', f.read()[:80523].decode('utf-8')).split('\t')
+    string = ""
+    with open('out.txt') as f:
+        #string += f.read()[:26915].decode('utf-8' 'ignore')
+        string += f.read().decode('utf-8', 'ignore')
+    with open('demo.txt') as f:
+        #string += f.read()[:8000].decode('utf-8' 'ignore')
+        string += f.read().decode('utf-8', 'ignore')
+    return re.sub('\n\n+', '\t', string).split('\t')
 
 #TAGS = [tag.encode('utf-8') for tag in TAGS]
 
@@ -43,7 +47,7 @@ for idx, poet in enumerate(poets):
         if noun in TAGS:
             tags.append(noun)
 
-    hash_object = hashlib.sha1(poet.encode('utf-8'))
+    hash_object = hashlib.sha1(poet.encode('utf-8', 'ignore'))
     hex_dig = hash_object.hexdigest()
 
     results = collection.find_one({'hex':hex_dig})
