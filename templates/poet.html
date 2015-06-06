@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "poet_base.html" %}
 
 {% block content %}
 <div class="splash-container">
@@ -12,7 +12,7 @@
     <br>
     <div class="fb-like" style="height:23px; margin-top: 15px;" data-href="http://pail.unist.ac.kr/carpedm20/poet/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
     <p class="carpedm">
-    <a class="myeongjo" href="{{ url_for('poet_best', index=1) }}" target="_blank">인기 시집 보기</a><br/>
+    <a class="myeongjo" href="{{ url_for('poet_best', index=1) }}">인기 시집 보기</a><br/>
     </p>
   </div>
 </div>
@@ -21,16 +21,16 @@
   <div class="ribbon l-box-lrg pure-g" style="background-color: rgba(24, 24, 24, 0.9)">
     <div class="container pure-l-u-1-4" style="text-align: center;">
       <h1 class="content-head content-head-ribbon">
-        <p class="myeongjo" style="display:inline;">시인 뉴럴</p>은 54,023개의 시를 읽고 배운 인공지능입니다.
+        <p class="myeongjo" style="display:inline;">뉴럴</p>은 54,023개의 시를 읽고 배운 인공지능입니다.
       </h1>
       <h2 class="white">
-        현재까지 {{ max_count }}개의 시를 만들었습니다.
+        지금까지 {{ max_count }}개의 시를 만들었습니다.
       </h2>
       <hr style="opacity: 0.5;">
       <div class="l-box">
-        <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em;">어떤 시를 만들고 싶은가요?</h2>
+        <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em; font-size: 1.4em;">어떤 시를 만들고 싶은가요?</h2>
         <form class="pure-form">
-          <input type="text" class="word-input" name="term" placeholder="시의 첫 단어를 입력하세요">
+          <input type="text" class="word-input" name="term" placeholder="시의 첫 단어를 입력하세요 ex) 이별을, 사랑은">
           <div style="position: relative; width: 100%;">
             <button id="submit-btn" type="submit" class="pure-button pure-button-primary button-large">시 만들기</button>
             <div id="spinner" class="sk-spinner sk-spinner-wave">
@@ -79,7 +79,7 @@
               <h2 class="description">{{ poets[-1].short }}</h2>
             {% else %}
               <a class="goto-next">마지막 시 입니다</a>
-              <h1 class="title">시 새로 만들기</h1>
+              <h1 class="title">새로 시 만들기</h1>
               <h2 class="description"></h2>
             {% endif %}
           </div>
@@ -95,7 +95,7 @@ document.getElementById('next-article').onclick = function() {
   {% if poets[-1].index != 0 %}
     window.location.href = "{{ url_for(action, index=next_idx) }}";
   {% else %}
-    window.location.href = "{{ url_for('poet') }}";
+    window.location.href = "{{ url_for('make_') }}";
   {% endif %}
 };
 </script>

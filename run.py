@@ -195,8 +195,38 @@ def get_default_render(template, action, index, items):
 
     return render_template(template, action=action, next_idx=index, poets=items, max_count=collection.count(), footer=str(randint(1,5)))
 
+@app.route('/%s/poet/make_/' % PREFIX, methods=['GET', 'POST'])
+def make_():
+    seed = str(randint(1,1000000))
+    command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', '0.7']
+    out = check_output(command)
+
+    poets = re.sub('\n\n+', '\t', out).split('\t')
+    try:
+        poet = poets[1]
+    except:
+        for poet_text in poets:
+            poet = "\n\n".join(poet_text.split('\n\n')[:-1])
+
+            if poet.strip() == "":
+                continue
+            else:
+                break
+
+    idx = collection.count()
+
+    hash_object = hashlib.sha1(poet)
+    hex_dig = hash_object.hexdigest()
+
+    doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+
+    _id = collection.insert(doc)
+    item = list(collection.find({'_id':_id}))[0]
+
+    return redirect(url_for('poet_one', index = item['index']))
+
 @app.route('/%s/poet/make/' % PREFIX, methods=['GET', 'POST'])
-def make():
+def make(redirect=False):
     try:
         seed = str(randint(1,1000000))
         command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', '0.7']
@@ -211,7 +241,13 @@ def make():
             try:
                 poet = poets[1]
             except:
-                poet = "\n\n".join(poets[0].split('\n\n')[:-1])
+                for poet_text in poets:
+                    poet = "\n\n".join(poet_text.split('\n\n')[:-1])
+
+                    if poet.strip() == "":
+                        continue
+                    else:
+                        break
 
         idx = collection.count()
 
@@ -227,13 +263,16 @@ def make():
     except Exception as e:
         data = {'success': False, 'msg': e}
 
+    if redirect:
+        return redirect(url_for('poet_one', index = item['index']))
+
     return jsonify(**data)
 
 @app.route('/%s/alba/' % PREFIX)
 def alba():
-    poets = ["123","1231231","123","1231231","123123123","","123123"]
+    reviews = ["123","1231231","123","1231231","123123123","","123123"]
 
-    return render_template('alba.html', poets=poets)
+    return render_template('alba.html', reviews=reviews)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5004)
