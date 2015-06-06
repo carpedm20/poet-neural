@@ -165,11 +165,10 @@ def pagination(idx, best=False):
     if best:
         #items = list(col.find({'index':{'$gte':start_idx}}).limit(count))
         #items = list(poet_col.find({'like':{'$gte':start_idx}}).sort([('like', pymongo.DESCENDING)]))
-        items = list(poet_col.find().sort([('like', pymongo.DESCENDING)]).limit(count))
+        items = list(poet_col.find().sort([('like', pymongo.DESCENDING)]).limit(20))
     else:
         items = list(poet_col.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
-
-    items.reverse()
+        items.reverse()
 
     return get_items(items, start_idx)
 
@@ -187,6 +186,7 @@ def poet_best(index):
         return redirect(url_for('poet'))
 
     items = pagination(index, best=True)
+
     return get_default_render('poet.html', "poet_best", index+1, items)
 
 @app.route('/%s/poet/' % PREFIX)

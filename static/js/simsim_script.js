@@ -41,5 +41,5 @@ alba_theater
 
 alba_theater
   .write("SimSim:인공지능 심심이", 1000)
-  .write("SimSim:심심이 뉴런")
+  .write("SimSim:뉴럴 심심이")
 
