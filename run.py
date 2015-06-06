@@ -278,6 +278,10 @@ def alba():
 
     return render_template('alba.html', reviews=reviews, max_count=max_count)
 
+@app.route('/%s/simsim/' % PREFIX)
+def simsim():
+    return render_template('simsim.html')
+
 @app.route('/%s/alba/load/<int:index>' % PREFIX)
 def alba_load(index):
     reviews = list(review_col.find().sort([('index', pymongo.DESCENDING)]).skip(index*ALBA_PAGE).limit(ALBA_PAGE))
@@ -288,7 +292,7 @@ def alba_load(index):
 @app.route('/%s/alba/make/' % PREFIX, methods=['GET', 'POST'])
 def alba_make():
     seed = str(randint(1,1000000))
-    command = ['th', 'extract.lua', 'movie_weight.bin','-length', '100', '-seed', seed, '-temp', '0.7']
+    command = ['th', 'extract.lua', 'movie_weight.bin','-length', '200', '-seed', seed, '-temp', '0.5']
 
     if request.method == 'POST' and request.form['term']:
         out = check_output(command + ['-term'] + [request.form['term']])

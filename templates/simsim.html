@@ -1,0 +1,107 @@
+{% extends "simsim_base.html" %}
+
+{% block content %}
+<div class="splash-container">
+  <div class="intro-bg">
+    <!--<div class="intro-bg-img" style="background-image: url('{{ url_for('static', filename='img/bg.jpg') }}')"></div>-->
+    <div class="intro-bg-img" style="background-color: #fbe762"></div>
+  </div>
+  <div class="splash">
+    <h1 id="alba-title"></h1>
+    <br>
+    <br>
+    <div class="fb-like" style="height:23px; margin-top: 15px;" data-href="http://pail.unist.ac.kr/carpedm20/simsim/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <p class="carpedm myeongjo">인공지능으로 탄생한 심심이</p>
+  </div>
+</div>
+
+<div class="content-wrapper">
+  <div class="ribbon l-box-lrg pure-g" style="background-color: #76C1F9">
+    <div class="container pure-l-u-1-4" style="text-align: center;">
+      <h1 class="content-head content-head-ribbon">
+        <p class="myeongjo" style="color: #6826b9; display:inline;">뉴럴 심심이</p>은 1,327,349개의 대화를 보고 배워 대화를 할 수 있는 인공지능입니다.
+      </h1>
+      <h2 class="white">
+        지금까지 {{ max_count }}개의 대화를 했습니다.
+      </h2>
+      <hr style="opacity: 0.5;">
+      <div class="l-box">
+        <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em; font-size: 1.4em;">어떤 리뷰를 만들고 싶은가요?</h2>
+        <form class="pure-form">
+          <input type="text" class="word-input" name="term" placeholder="리뷰의 첫 단어를 입력하세요 ex) 명작, 시간">
+          <div style="position: relative; width: 100%;">
+            <button id="submit-btn" type="submit" class="pure-button pure-button-primary button-large">리뷰 만들기</button>
+            <div id="spinner" class="sk-spinner sk-spinner-wave">
+              <div class="sk-rect1"></div>
+              <div class="sk-rect2"></div>
+              <div class="sk-rect3"></div>
+              <div class="sk-rect4"></div>
+              <div class="sk-rect5"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="content content-intro pure-g">
+    <div id="reviews" class="container pure-u-xl-1-2 pure-u-md-3-5 pure-u-sm-1-1 pure-u-1-1 review-container">
+      <br>
+      <p>in progress</p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
