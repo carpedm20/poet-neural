@@ -1,3 +1,20 @@
+$(document).ready(function () {
+    $(".like").click(function() {
+        var poet = $(this);
+        var pid = $(this).attr('id');
+        $.ajax({
+            dataType: "json",
+            url: '/carpedm20/poet/like/' + pid,
+            success: function(data) {
+                console.log(data);
+                if (data.success) {
+                    poet.html('<i class="fa fa-heart"></i> 좋아요 '+data.count);
+                }
+            }
+        });
+    });
+});
+
 //jQuery to collapse the home-menu on scroll
 $(window).scroll(function() {
     if ($(".splash").offset().top > 330) {
@@ -62,3 +79,4 @@ poet_theater
 alba_theater
   .write("Alba:인공지능 알바", 1000)
   .write("Alba:뉴럴 알바")
+

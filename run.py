@@ -1,12 +1,14 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from flask import Flask
-from flask import url_for, redirect, render_template
+from flask import url_for, redirect, render_template, jsonify, session
 
 PREFIX = "carpedm20"
 BASE_URL = "http://pail.unist.ac.kr/"
 
 app = Flask(__name__, static_url_path="/%s/poet/static" % PREFIX,)
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
 
 import re
 from glob import glob
@@ -56,33 +58,66 @@ poets = get_poets()
 def root():
     return redirect(url_for('poet'))
 
+@app.route('/%s/poet/like/<int:index>' % PREFIX)
+def poet_like(index):
+    item = list(collection.find({'index':index}).limit(1))[0]
+
+    if not session.has_key('likes'):
+        session['likes'] = []
+
+    if str(item['_id']) in session['likes']:
+        data = {'success':False}
+    else:
+        collection.update({
+            '_id': item['_id']
+        },{
+            '$inc': {
+                'like': 1
+            }
+        }, upsert=False, multi=False)
+
+        data = {'success':True, 'count': item['like'] + 1}
+        session['likes'].append(str(item['_id']))
+
+    return jsonify(**data)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('poet'))
+
 @app.route('/%s/poet/<int:index>' % PREFIX)
 def poet_one(index):
-    years = glob("./static/*.json")
-
-    items = list(collection.find().skip(index-1).limit(2))
-    if not items:
+    if index == 0:
         return redirect(url_for('poet'))
 
-    items = get_items(items, index)
-    print items
+    items = list(collection.find({'index':{'$gte':index-1}}).sort('index').limit(2))
 
-    return get_default_render('poet.html', 'poet_one', items[-1]['index'], items)
+    if len(items) != 2:
+        return redirect(url_for('poet'))
+
+    items.reverse()
+
+    return get_default_render('poet.html', 'poet_one', items[-1]['index'], get_items(items, index))
 
 def get_items(items, index):
     item_iter = items[:-1]
     if len(items) == 1:
         item_iter = items
 
-    tmp = nl2brlist(True, items[0]['text'].split('\n'), True)
-    items[0]['title'] = tmp[0].strip()
-    items[0]['short'] = ""
+    item = items[0]
+    tmp = nl2brlist(True, item['text'].split('\n'), True)
+    item['title'] = tmp[0].strip()
+    item['short'] = ""
 
-    title_idx = 2
-    while len(items[0]['short']) < 30:
-        items[0]['short'] += tmp[title_idx] + " "
+    title_idx = 1
+    while len(item['short']) < 30:
+        try:
+            item['short'] += tmp[title_idx] + " "
+        except:
+            break
         title_idx += 1
-    items[0]['short'] = items[0]['short'].strip() + "..."
+    item['short'] = item['short'].strip() + "..."
 
     for idx, item in enumerate(item_iter):
         #tmp = item['text'].split('\n')
@@ -94,18 +129,16 @@ def get_items(items, index):
                 item['text'] = tmp
             except:
                 item['text'] = ""
-            item['head'] = "#%s" % (index+idx)
+            item['head'] = "#%s" % item['index']
         else:
             item['text'] = '\n'.join(tmp.split('\n')[1:])
             item['head'] = head
-        item['index'] = index+idx
 
     if len(items) != 1:
         item = items[-1]
         tmp = nl2brlist(True, item['text'].split('\n'), True)
-        items[-1]['head'] = tmp[0]
-        items[-1]['short'] = tmp[1]
-        item['index'] = index+idx+1
+        item['head'] = tmp[0]
+        item['short'] = tmp[1]
     else:
         items.append({'head':u'새로 만들기', 'short':'', 'index':0})
 
@@ -119,29 +152,21 @@ def pagination(idx):
         count += start_idx
         start_idx = 0
         
-    items = list(collection.find().sort('date').skip(start_idx).limit(count))
+    items = list(collection.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
     items.reverse()
 
     return get_items(items, start_idx)
 
-@app.route('/%s/poet/page/0' % PREFIX)
-def poet_generate():
-    years = glob("./static/*.json")
-
-    items = pagination(1)
-    return get_default_render('poet.html', "poet_page", index+1, items)
-
 @app.route('/%s/poet/page/<int:index>' % PREFIX)
 def poet_page(index):
-    years = glob("./static/*.json")
+    if index < 0:
+        return redirect(url_for('poet'))
 
     items = pagination(index)
     return get_default_render('poet.html', "poet_page", index+1, items)
 
 @app.route('/%s/poet/' % PREFIX)
 def poet():
-    years = glob("./static/*.json")
-
     items = pagination(1)
     return get_default_render('poet.html', "poet_page", 2, items)
 
@@ -150,8 +175,6 @@ def get_default_render(template, action, index, items):
 
 @app.route('/%s/alba/' % PREFIX)
 def alba():
-    years = glob("./static/*.json")
-
     poets = ["123","1231231","123","1231231","123123123","","123123"]
 
     return render_template('alba.html', poets=poets)

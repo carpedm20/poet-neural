@@ -48,5 +48,5 @@ for idx, poet in enumerate(poets):
 
     results = collection.find_one({'hex':hex_dig})
     if not results:
-        document = {'text': poet, 'tags': tags, 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+        document = {'text': poet, 'index': idx, 'tags': tags, 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
         collection.insert(document)
