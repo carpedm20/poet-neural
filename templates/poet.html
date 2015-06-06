@@ -10,8 +10,10 @@
     <h1 id="poet-title"></h1>
     <br>
     <br>
-    <p class="carpedm"><a href="https://carpedm20.github.io" target="_blank">@carpedm20</a></p>
     <div class="fb-like" data-href="http://pail.unist.ac.kr/carpedm20/poet/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <p class="carpedm">
+    <a class="myeongjo" href="{{ url_for('poet_best', index=1) }}" target="_blank">인기 시집 보기</a><br/>
+    </p>
   </div>
 </div>
 
@@ -63,7 +65,7 @@
           <div class="text myeongjo">
             {% if poets[-1].index != 0 %}
               <a class="goto-next">계속 읽기</a>
-              <h1 class="title">{{ poets[-1].head }}</h1>
+              <h1 class="title">{{ poets[-1].title }}</h1>
               <h2 class="description">{{ poets[-1].short }}</h2>
             {% else %}
               <a class="goto-next">마지막 시 입니다</a>
@@ -83,7 +85,7 @@ document.getElementById('next-article').onclick = function() {
   {% if poets[-1].index != 0 %}
     window.location.href = "{{ url_for(action, index=next_idx) }}";
   {% else %}
-    window.location.href = "{{ url_for(action, index=0) }}";
+    window.location.href = "{{ url_for('poet') }}";
   {% endif %}
 };
 </script>

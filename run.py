@@ -22,7 +22,7 @@ from konlpy.utils import pprint
 import hashlib
 
 from tags import tags as TAGS
-PAGE = 5
+PAGE = 8
 
 client = MongoClient('localhost', 27017)
 db = client['neural']
@@ -35,7 +35,7 @@ _paragraph_re1 = re.compile(r'((?:\r\n|\r|\n){1,}|\.\ +)')
 @evalcontextfilter
 def nl2br(eval_ctx, value, is_list=False):
     if is_list:
-        result = [u'%s' % p.replace('\n', u'</p><p>\n') \
+        result = [u'%s' % p.replace('\n', u'') \
             for p in _paragraph_re1.split(value) if '. ' not in p and p != '.\n' and p != '\n']
     else:
         result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', u'</p><p>\n') \
@@ -102,22 +102,23 @@ def poet_one(index):
 
 def get_items(items, index):
     item_iter = items[:-1]
-    if len(items) == 1:
+    if len(item_iter) == 1:
         item_iter = items
 
-    item = items[0]
-    tmp = nl2brlist(True, item['text'].split('\n'), True)
-    item['title'] = tmp[0].strip()
-    item['short'] = ""
+    for idx in [0, -1]:
+        item = items[idx]
+        tmp = nl2brlist(True, item['text'].split('\n'), True)
+        item['title'] = tmp[0].strip()
+        item['short'] = ""
 
-    title_idx = 1
-    while len(item['short']) < 30:
-        try:
-            item['short'] += tmp[title_idx] + " "
-        except:
-            break
-        title_idx += 1
-    item['short'] = item['short'].strip() + "..."
+        title_idx = 1
+        while len(item['short']) < 30:
+            try:
+                item['short'] += tmp[title_idx].strip() + " "
+            except:
+                break
+            title_idx += 1
+        item['short'] = item['short'].strip() + "..."
 
     for idx, item in enumerate(item_iter):
         #tmp = item['text'].split('\n')
@@ -134,25 +135,32 @@ def get_items(items, index):
             item['text'] = '\n'.join(tmp.split('\n')[1:])
             item['head'] = head
 
-    if len(items) != 1:
-        item = items[-1]
-        tmp = nl2brlist(True, item['text'].split('\n'), True)
-        item['head'] = tmp[0]
-        item['short'] = tmp[1]
-    else:
+    if index == 0:
         items.append({'head':u'새로 만들기', 'short':'', 'index':0})
 
     return items
 
-def pagination(idx):
-    max_idx = collection.count() - 1
+def pagination(idx, best=False):
+    if best:
+        col = collection.find({'like':{'$gte':1}}).sort('like')
+    else:
+        col = collection.find()
+
+    max_idx = col.count() - 1
     start_idx = max_idx - (PAGE) * (idx)
     count = PAGE + 1
     if start_idx < 0:
         count += start_idx
         start_idx = 0
+
+    if count < 0:
+        return []
         
-    items = list(collection.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
+    if best:
+        items = list(col.limit(count))
+    else:
+        items = list(collection.find({'index':{'$gte':start_idx}}).sort('like').limit(count))
+
     items.reverse()
 
     return get_items(items, start_idx)
@@ -165,12 +173,23 @@ def poet_page(index):
     items = pagination(index)
     return get_default_render('poet.html', "poet_page", index+1, items)
 
+@app.route('/%s/poet/best/<int:index>' % PREFIX)
+def poet_best(index):
+    if index < 0:
+        return redirect(url_for('poet'))
+
+    items = pagination(index, best=True)
+    return get_default_render('poet.html', "poet_best", index+1, items)
+
 @app.route('/%s/poet/' % PREFIX)
 def poet():
     items = pagination(1)
     return get_default_render('poet.html', "poet_page", 2, items)
 
 def get_default_render(template, action, index, items):
+    if len(items) == 0:
+        return redirect(url_for('poet'))
+
     return render_template(template, action=action, next_idx=index, poets=items, max_count=collection.count(), footer=str(randint(1,5)))
 
 @app.route('/%s/alba/' % PREFIX)

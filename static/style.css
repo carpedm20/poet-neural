@@ -201,3 +201,8 @@ h1, h2 {
 .title p {
   color: rgb(240, 240, 240);
 }
+
+.title {
+  margin-bottom: 15px !important;
+  padding-top: 5px !important;
+}
