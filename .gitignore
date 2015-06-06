@@ -1,7 +1,7 @@
 *.vim
 *.lua
 util
-weight*
+*.bin
 *.txt
 
 #ipython

@@ -17,6 +17,7 @@ from glob import glob
 from jinja2 import evalcontextfilter, Markup, escape
 
 import datetime
+import pymongo
 from random import randint
 from pymongo import MongoClient
 from collections import Counter
@@ -26,10 +27,12 @@ import hashlib
 
 from tags import tags as TAGS
 PAGE = 5
+ALBA_PAGE = 30
 
 client = MongoClient('localhost', 27017)
 db = client['neural']
-collection = db['poet']
+poet_col = db['poet']
+review_col = db['review']
 
 _paragraph_re = re.compile(r'((?:\r\n|\r|\n){2,}|\.\ +)')
 _paragraph_re1 = re.compile(r'((?:\r\n|\r|\n){1,}|\.\ +)')
@@ -63,7 +66,7 @@ def root():
 
 @app.route('/%s/poet/like/<int:index>' % PREFIX)
 def poet_like(index):
-    item = list(collection.find({'index':index}).limit(1))[0]
+    item = list(poet_col.find({'index':index}).limit(1))[0]
 
     if not session.has_key('likes'):
         session['likes'] = []
@@ -71,7 +74,7 @@ def poet_like(index):
     if str(item['_id']) in session['likes']:
         data = {'success':False}
     else:
-        collection.update({
+        poet_col.update({
             '_id': item['_id']
         },{
             '$inc': {
@@ -94,7 +97,7 @@ def poet_one(index):
     if index == 0:
         return redirect(url_for('poet'))
 
-    items = list(collection.find({'index':{'$gte':index-1}}).sort('index').limit(2))
+    items = list(poet_col.find({'index':{'$gte':index-1}}).sort('index').limit(2))
 
     if len(items) != 2:
         return redirect(url_for('poet'))
@@ -145,9 +148,9 @@ def get_items(items, index):
 
 def pagination(idx, best=False):
     if best:
-        col = collection.find({'like':{'$gte':1}}).sort('like')
+        col = poet_col.find({'like':{'$gte':1}}).sort('like')
     else:
-        col = collection.find()
+        col = poet_col.find()
 
     max_idx = col.count() - 1
     start_idx = max_idx - (PAGE) * (idx)
@@ -162,7 +165,7 @@ def pagination(idx, best=False):
     if best:
         items = list(col.limit(count))
     else:
-        items = list(collection.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
+        items = list(poet_col.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
 
     items.reverse()
 
@@ -193,7 +196,7 @@ def get_default_render(template, action, index, items):
     if len(items) == 0:
         return redirect(url_for('poet'))
 
-    return render_template(template, action=action, next_idx=index, poets=items, max_count=collection.count(), footer=str(randint(1,5)))
+    return render_template(template, action=action, next_idx=index, poets=items, max_count=poet_col.count(), footer=str(randint(1,5)))
 
 @app.route('/%s/poet/make_/' % PREFIX, methods=['GET', 'POST'])
 def make_():
@@ -213,15 +216,15 @@ def make_():
             else:
                 break
 
-    idx = collection.count()
+    idx = poet_col.count()
 
     hash_object = hashlib.sha1(poet)
     hex_dig = hash_object.hexdigest()
 
     doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
 
-    _id = collection.insert(doc)
-    item = list(collection.find({'_id':_id}))[0]
+    _id = poet_col.insert(doc)
+    item = list(poet_col.find({'_id':_id}))[0]
 
     return redirect(url_for('poet_one', index = item['index']))
 
@@ -249,15 +252,15 @@ def make(redirect=False):
                     else:
                         break
 
-        idx = collection.count()
+        idx = poet_col.count()
 
         hash_object = hashlib.sha1(poet)
         hex_dig = hash_object.hexdigest()
 
         doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
 
-        _id = collection.insert(doc)
-        item = list(collection.find({'_id':_id}))[0]
+        _id = poet_col.insert(doc)
+        item = list(poet_col.find({'_id':_id}))[0]
 
         data = {'success': True, 'index': item['index']}
     except Exception as e:
@@ -270,9 +273,43 @@ def make(redirect=False):
 
 @app.route('/%s/alba/' % PREFIX)
 def alba():
-    reviews = ["123","1231231","123","1231231","123123123","","123123"]
+    reviews = list(review_col.find().sort([('index', pymongo.DESCENDING)]).limit(ALBA_PAGE))
+    max_count = review_col.count()
 
-    return render_template('alba.html', reviews=reviews)
+    return render_template('alba.html', reviews=reviews, max_count=max_count)
+
+@app.route('/%s/alba/load/<int:index>' % PREFIX)
+def alba_load(index):
+    reviews = list(review_col.find().sort([('index', pymongo.DESCENDING)]).skip(index*ALBA_PAGE).limit(ALBA_PAGE))
+    data = {'reviews': [(review['text'], review['date'].strftime('%Y-%m-%d %H:%M:%S')) for review in reviews]}
+
+    return jsonify(**data)
+
+@app.route('/%s/alba/make/' % PREFIX, methods=['GET', 'POST'])
+def alba_make():
+    seed = str(randint(1,1000000))
+    command = ['th', 'extract.lua', 'movie_weight.bin','-length', '100', '-seed', seed, '-temp', '0.7']
+
+    if request.method == 'POST' and request.form['term']:
+        out = check_output(command + ['-term'] + [request.form['term']])
+        reviews = (request.form['term'] + out.decode('utf-8', 'ignore')).split('\n')
+    else:
+        out = check_output(command)
+        reviews = out.decode('utf-8', 'ignore').split('\n')
+
+    reviews = reviews[:1]
+    idx = review_col.count()
+    count = 0
+    for review in reviews:
+        if review.strip() == "":
+            continue
+        doc = {'text': review, 'index': idx + count, 'tags': [], 'like': 0, 'date': datetime.datetime.utcnow()}
+        count += 1
+        _id = review_col.insert(doc)
+        print _id
+
+    data = {'reviews': [(review, datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')) for review in reviews if review.strip() != ""]}
+    return jsonify(**data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5004)

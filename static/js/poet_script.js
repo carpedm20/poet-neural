@@ -31,7 +31,7 @@ $(document).ready(function () {
                 window.location.href = "/carpedm20/poet/" + data['index'];
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                alert("서버의 GPU가 힘들어 합니다. 다시 시도해 주세요 :)");
                 $("#submit-btn").show();
                 $("#spinner").hide();
                 $("#spinner").css('position', 'absolute');

@@ -15,19 +15,19 @@
 </div>
 
 <div class="content-wrapper">
-  <div class="ribbon l-box-lrg pure-g" style="background-color: rgba(24, 24, 24, 0.9)">
+  <div class="ribbon l-box-lrg pure-g" style="background-color: rgb(61, 79, 93)">
     <div class="container pure-l-u-1-4" style="text-align: center;">
       <h1 class="content-head content-head-ribbon">
-        <p class="myeongjo" style="display:inline;">뉴런</p>은 4,157,956개의 영화 리뷰를 읽고 배운 인공지능입니다.
+        <p class="myeongjo" style="color: #96AFFF; display:inline;">뉴런</p>은 4,157,956개의 영화 리뷰를 읽고 배운 인공지능입니다.
       </h1>
       <h2 class="white">
         지금까지 {{ max_count }}개의 리뷰를 만들었습니다.
       </h2>
       <hr style="opacity: 0.5;">
       <div class="l-box">
-        <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em; font-size: 1.4em;">어떤 시를 만들고 싶은가요?</h2>
+        <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em; font-size: 1.4em;">어떤 리뷰를 만들고 싶은가요?</h2>
         <form class="pure-form">
-          <input type="text" class="word-input" name="term" placeholder="리뷰의 첫 단어를 입력하세요 ex) 스토리, 박평식">
+          <input type="text" class="word-input" name="term" placeholder="리뷰의 첫 단어를 입력하세요 ex) 명작, 시간">
           <div style="position: relative; width: 100%;">
             <button id="submit-btn" type="submit" class="pure-button pure-button-primary button-large">리뷰 만들기</button>
             <div id="spinner" class="sk-spinner sk-spinner-wave">
@@ -43,37 +43,38 @@
     </div>
   </div>
   <div class="content content-intro pure-g">
-    <div class="container pure-u-xl-1-2 pure-u-md-3-5 pure-u-sm-1-1 pure-u-1-1">
+    <div id="reviews" class="container pure-u-xl-1-2 pure-u-md-3-5 pure-u-sm-1-1 pure-u-1-1 review-container">
       {% for review in reviews %}
-        <li>
-            <div class="star_score">
-                <span class="st_off">
-                  <span class="st_on" style="width:100.0%"></span>
-                </span>
-                <em>10</em>
-            </div>
-            <div class="score_reple">
-              <p>박평식 평론가님 항상 감사드립니다. 어쩜 그리 저랑 취향이 반대인지 평론가님이 추천하는 영화는 안보고 비추하는 영화만 봤는데 아주아주 영화보는데 만족하고 있습니다.항상 그렇게 초심 잃지 마시고 영화평론 부탁드립니다.  </p>
-              <dl>
-                <dt>
-                  <em>
-                    <a href="#" onclick="javascript:showPointListByNid(9971938);return false;">
-                      <span>단군의땅(robi****)</span>
-                    </a>
-                  </em>
-                  <em>2015.06.03 10:45</em>
-                </dt>
-                <dd>
-                      <a href="#" onclick="javascript:common.report('robi****', '2xVwbR3qB+7nKdz8bjXhVQ==', '박평식 평론가님 항상 감사드립니다. 어쩜 그리 저랑 취향이 반대인지 평론가님이 추천하는 영화는 안보고 비추하는 영화만 봤는데 아주아주 영화보는데 만족하고 있습니다.항상 그렇게 초심 잃지 마시고 영화평론 부탁드립니다. ', '9971938', 'point_after', false);return false;" class="go_report2"><em>신고</em></a><!-- N=a:mra.report -->
-                </dd>
-              </dl>
-            </div>
-            <div class="btn_area">
-              <a class="_sympathyButton" href="#"><span class="blind">공감</span></a><!-- N=a:mra.sym --><strong><span class="sympathy_9971938 count">1120</span></strong>
-            </div>
-          </li>
+        {% if review.text %}
+          <div class="posts">
+            <section class="post">
+              <h1 class="content-subhead">{{ review.date.strftime('%Y-%m-%d %H:%M:%S') }}</h1>
+              <div class="post-description">
+                <p>
+                  {{ review.text }}
+                </p>
+              </div>
+            </section>
+          </div>
+        {% endif %}
       {% endfor %}
+      <div id="btn-wrapper" style="position: relative;" class="pure-g">
+        <button id="review-btn" type="submit" class="pure-button pure-button-primary button-large pure-u-1-2">리뷰 더 불러오기</button>
+        <div id="spinner" class="sk-spinner sk-spinner-wave">
+          <div class="sk-rect1"></div>
+          <div class="sk-rect2"></div>
+          <div class="sk-rect3"></div>
+          <div class="sk-rect4"></div>
+          <div class="sk-rect5"></div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="footer">
+      <div class="pure-menu pure-menu-horizontal">
+        <a class="white" href="https://carpedm20.github.io" style="font-size:1.3em;" target="_blank">carpedm20</a>
+      </div>
   </div>
 
 </div>
