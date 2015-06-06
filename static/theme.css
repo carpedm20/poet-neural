@@ -70,20 +70,21 @@ label {
  * -- PURE BUTTON STYLES --
  * I want my pure-button elements to look a little different
  */
-.pure-button {
-    background-color: #1f8dd6;
-    color: white;
-    padding: 0.5em 1.5em;
-    border-radius: 5px;
+.button-xsmall {
+    font-size: 70%;
 }
 
-a.pure-button-primary {
-    background: white;
-    color: #1f8dd6;
-    border-radius: 5px;
-    font-size: 120%;
+.button-small {
+    font-size: 85%;
 }
 
+.button-large {
+    font-size: 110%;
+}
+
+.button-xlarge {
+    font-size: 125%;
+}
 
 /*
  * -- MENU STYLES --
@@ -281,4 +282,212 @@ a.pure-button-primary {
     }
 }
 
-*,*:before,*:after{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%}.outer{display:table;margin:0 auto;height:100%}.inner{display:table-cell;vertical-align:middle}.wrapper{width:700px}body{font-family:'Cutive', serif;background-color:#222;color:#ededed;font-size:14px;-webkit-transition:background-color 200ms ease-out;transition:background-color 200ms ease-out}body.light{background-color:#ededed;color:#222}body.blood{color:#ededed;background-color:#c92b2b}a{color:inherit;text-decoration:none;border-bottom:1px solid;display:inline-block}p{margin:20px 0;padding:0}@keyframes caret{0% { opacity: 0 } 50% { opacity: 0 } 50.01% { opacity: 0.7 } 100% { opacity: 0.7}}.scene{font-size:240%;font-weight:400;line-height:1.6}.saying:after{content:"|";font-family:Arial, sans-serif;font-size:1.2em;line-height:1;display:inline-block;vertical-align:baseline;opacity:1;-webkit-animation:caret 500ms infinite;animation:caret 1000ms infinite}pre{font-size:18px;line-height:1;overflow:auto;font-family:monospace;background-color:#ededed;color:#222;margin:20px 0;padding:10px}pre+p{margin-bottom:40px}pre+p #showlink{display:none}pre+p #hidelink{display:inline-block}pre:target{opacity:0}pre:target+p #hidelink{display:none}pre:target+p #showlink{display:inline-block}
+*,*:before,*:after{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%}.outer{display:table;margin:0 auto;height:100%}.inner{display:table-cell;vertical-align:middle}.wrapper{width:700px}body{font-family:'Cutive', serif;background-color:#222;color:#ededed;font-size:14px;-webkit-transition:background-color 200ms ease-out;transition:background-color 200ms ease-out}body.light{background-color:#ededed;color:#222}body.blood{color:#ededed;background-color:#c92b2b}a{color:inherit;text-decoration:none;display:inline-block}p{margin:20px 0;padding:0}@keyframes caret{0% { opacity: 0 } 50% { opacity: 0 } 50.01% { opacity: 0.7 } 100% { opacity: 0.7}}.scene{font-size:240%;font-weight:400;line-height:1.6}.saying:after{content:"|";font-family:Arial, sans-serif;font-size:1.2em;line-height:1;display:inline-block;vertical-align:baseline;opacity:1;-webkit-animation:caret 500ms infinite;animation:caret 1000ms infinite}pre{font-size:18px;line-height:1;overflow:auto;font-family:monospace;background-color:#ededed;color:#222;margin:20px 0;padding:10px}pre+p{margin-bottom:40px}pre+p #showlink{display:none}pre+p #hidelink{display:inline-block}pre:target{opacity:0}pre:target+p #hidelink{display:none}pre:target+p #showlink{display:inline-block}
+
+/* line 2, ../scss/_extensions.scss */
+body article.page .content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* line 7, ../scss/_extensions.scss */
+body article.page .big-image {
+  background-position: center center;
+  background-repeat: none;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* line 13, ../scss/_extensions.scss */
+body article.page .big-image {
+  height: 300px;
+}
+@media only screen and (min-width: 500px) {
+  /* line 13, ../scss/_extensions.scss */
+  .big-image, body article.page .big-image {
+    height: 420px;
+  }
+}
+
+/* line 36, ../scss/styles.scss */
+body article.page {
+  -webkit-transform-origin: bottom center;
+  /* Class applied when when page fades away. */
+  /* The large image that accompanies every post. */
+  /* The content. */
+}
+/* line 39, ../scss/styles.scss */
+body article.page.hidden {
+  display: none;
+}
+/* line 42, ../scss/styles.scss */
+body article.page.next .big-image, body article.page.next .big-image {
+  cursor: pointer;
+}
+/* line 43, ../scss/styles.scss */
+body article.page.next .big-image .inner, body article.page.next .big-image .inner {
+  opacity: 1;
+}
+/* line 47, ../scss/styles.scss */
+body article.page.content-hidden .content {
+  display: none;
+}
+/* line 51, ../scss/styles.scss */
+body article.page.fade-up-out {
+  opacity: 0;
+  -webkit-transform: scale(0.8) translate3d(0, -10%, 0);
+  -moz-transform: scale(0.8) translate3d(0, -10%, 0);
+  -ms-transform: scale(0.8) translate3d(0, -10%, 0);
+  -o-transform: scale(0.8) translate3d(0, -10%, 0);
+  transform: scale(0.8) translate3d(0, -10%, 0);
+  -webkit-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+/* line 57, ../scss/styles.scss */
+body article.page.easing-upward {
+  -webkit-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 450ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+/* line 62, ../scss/styles.scss */
+body article.page .big-image, body article.page .big-image {
+  font-size: 80%;
+}
+@media only screen and (min-width: 500px) {
+  /* line 62, ../scss/styles.scss */
+  body article.page .big-image, body article.page .big-image {
+    font-size: 100%;
+  }
+}
+
+
+/* line 62, ../scss/styles.scss */
+body article.page .big-image, body article.page .big-image {
+  font-size: 80%;
+}
+@media only screen and (min-width: 500px) {
+  /* line 62, ../scss/styles.scss */
+  body article.page .big-image, body article.page .big-image {
+    font-size: 100%;
+  }
+}
+/* line 69, ../scss/styles.scss */
+body article.page .big-image .inner, body article.page .big-image .inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  opacity: 0;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+/* line 78, ../scss/styles.scss */
+body article.page .big-image .inner .fader, body article.page .big-image .inner .fader {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+/* line 83, ../scss/styles.scss */
+body article.page .big-image .inner .fader .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+/* line 89, ../scss/styles.scss */
+body article.page .big-image .inner .fader .text a, body article.page .big-image .inner .fader .text h1, body article.page .big-image .inner .fader .text h2 {
+  color: white;
+}
+/* line 91, ../scss/styles.scss */
+body article.page .big-image .inner .fader .text a {
+  color: white;
+  border-bottom: 1px solid white;
+  text-decoration: none;
+  font-style: italic;
+  font-size: 0.8em;
+  line-height: 1.5em;
+}
+/* line 99, ../scss/styles.scss */
+body article.page .big-image .inner .fader .text h1 {
+  margin: 0;
+  margin-top: 0.1em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0em;
+  font-size: 3em;
+  line-height: 1.1em;
+}
+/* line 105, ../scss/styles.scss */
+body article.page .big-image .inner .fader .text h2 {
+  margin: 0;
+  font-style: italic;
+  font-weight: normal;
+  margin-top: 0.2em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0em;
+  font-size: 1.5em;
+  line-height: 1.2em;
+}
+/* line 119, ../scss/styles.scss */
+body article.page .content {
+  padding: 0 3em;
+}
+/* line 123, ../scss/styles.scss */
+body article.page .content h3 {
+  color: #999;
+  font-family: 'Source Sans Pro', serif;
+  font-weight: 400;
+  margin-top: 3em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.375em;
+  font-size: 0.8em;
+  line-height: 1.5em;
+}
+/* line 131, ../scss/styles.scss */
+body article.page .content h1 {
+  margin-top: 0em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.24em;
+  font-size: 2.5em;
+  line-height: 1.08em;
+}
+/* line 136, ../scss/styles.scss */
+body article.page .content h2.description {
+  font-weight: normal;
+  font-style: italic;
+}
+/* line 140, ../scss/styles.scss */
+body article.page .content p:last-child {
+  margin-bottom: 3em;
+}
+
+.big-image .inner {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.inner .fader {
+  text-align: center;
+}
+
+
+
+

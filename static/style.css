@@ -8,11 +8,16 @@
 body {
   font-family: 'Nanum Gothic', sans-serif;
 }
-#title {
+
+.myeongjo {
+  font-family: 'Nanum Myeongjo', sans-serif;
+}
+
+#alba-title, #poet-title {
   font-family: 'Nanum Myeongjo', sans-serif;
   /*font-family: 'Nanum Gothic', sans-serif;*/
-  font-size: 12vw;
-  line-height: 12vw;
+  font-size: 10vw;
+  line-height: 10vw;
   font-weight: normal;
   color: #ff4200;
   margin: 0;
@@ -108,15 +113,6 @@ body {
 
 
 
-.button-success,
-.button-error,
-.button-warning,
-.button-secondary {
-  color: white;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
 .button-success {
   background: rgb(28, 184, 65); /* this is a green */
 }
@@ -141,27 +137,55 @@ p.carpedm a {
   text-decoration: none !important;
 }
 
-article {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background: #fff;
-  width: 100%;
-  height: 128px;
-  padding: 0 24px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.08);
-  border-radius: 2px;
+article p {
+  color: #34495e;
 }
 
-aside {
-  background: #1f8dd6;
-  padding: 0.3em 1em;
-  border-radius: 3px;
-  color: #fff;
+.ml {
+  height: 232px;
+}
+
+.poet {
+  border-top: thin double #EBEBEB;
+  font-family: 'Nanum Myeongjo', sans-serif;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  background: #fff;
+  width: 100%;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 4px rgba(0,0,0,.20);
+  border-radius: 2px;
+  color: #333;
+}
+
+h3 {
+  color: #999;
+  font-family: 'Source Sans Pro', serif;
+  font-weight: 400;
+  margin-top: 1em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.375em;
+  font-size: 0.8em;
+  line-height: 1.5em;
+}
+
+.word-input {
+  text-align: center;
+  width: 80% !important;
+  margin: 0px 30px 30px 30px;
+}
+
+h1, h2 {
+  letter-spacing: 0.1em;
+}
+
+.white {
+  color: white;
+  font-weight: normal;
+}
+
+.content-head-ribbon {
+  line-height: 1.4em;
 }

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>All about Critics</title>
-  <meta name="keywords" content="all about critics,carpedm20,movie,visualization" />
+  <title>시인 뉴럴</title>
+  <meta name="keywords" content="시인 뉴럴,머신러닝,인공지능,시팔이" />
   <meta name="description" content="A data visualization of movie critics" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="All about Critics" />
-  <meta property="og:url" content="http://pail.unist.ac.kr/carpedm20/critics/"/>
-  <meta property="og:image" content="https://raw.githubusercontent.com/carpedm20/voxoffice/master/static/logo.png" />
+  <meta property="og:title" content="시인 뉴럴" />
+  <meta property="og:url" content="http://pail.unist.ac.kr/carpedm20/poet/"/>
+  <meta property="og:image" content="" />
   <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
@@ -36,24 +36,12 @@
 <body>
   <div class="header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed container">
-      <a class="pure-menu-heading" href="">carpedm20</a>
+      <a class="pure-menu-heading" href="https://carpedm20.github.io" target="_blank">carpedm20</a>
 
       <ul>
-        <li class="pure-menu-selected"><a href="#">시인 뉴럴</a></li>
+        <li class="pure-menu-selected"><a href="{{ url_for('poet') }}">시인 뉴럴</a></li>
+        <li class="pure-menu-selected"><a href="{{ url_for('alba') }}">뉴럴 알바</a></li>
       </ul>
-    </div>
-  </div>
-
-  <div class="splash-container">
-    <div class="intro-bg">
-      <!--<div class="intro-bg-img" style="background-image: url('{{ url_for('static', filename='img/bg.jpg') }}')"></div>-->
-      <div class="intro-bg-img" style="background-color: #fbfff1"></div>
-    </div>
-    <div class="splash">
-      <h1 id="title"></h1>
-      <br>
-      <br>
-      <p class="carpedm"><a href="https://carpedm20.github.io" target="_blank">@carpedm20</a></p>
     </div>
   </div>
 

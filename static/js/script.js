@@ -18,43 +18,47 @@ $(function() {
     });
 });
 
-var theater = new TheaterJS();
+var poet_theater = new TheaterJS();
+var alba_theater = new TheaterJS();
 
-theater
-  .describe("Poet", { speed: .3, accuracy: 1, invincibility: 4 }, "#title")
+poet_theater
+  .describe("Poet", { speed: .3, accuracy: 1, invincibility: 4 }, "#poet-title")
+alba_theater
+  .describe("Alba", { speed: .3, accuracy: 1, invincibility: 4 }, "#alba-title")
 
-theater
+poet_theater
   .on("*", function (eventName, originalEvent, sceneName, arg) {
-    var args  = Array.prototype.splice.apply(arguments, [3]),
-        log   = '{\n      name: "' + sceneName + '"';
-
-    log += ",\n      args: " + JSON.stringify(args).split(",").join(", ");
-    log += "\n    }";
-
   })
   .on("say:start, erase:start", function (eventName) {
-    // this refer to the TheaterJS instance.
     var self    = this,
-        
-        // The current actor is referenced as this.current
-        // Its voice is the third element passed to the describe method.
-        // It could be of two types: a DOM element or a function.
         current = self.current.voice;
-
-    // TheaterJS has some useful methods such as
-    // addClass, hasClass, removeClass, ...
-    // Note: the "saying" class adds the blinking caret.
     self.utils.addClass(current, "saying");
   })
   .on("say:end, erase:end", function (eventName) {
     var self    = this,
         current = self.current.voice;
+    //self.utils.removeClass(current, "saying");
+  });
 
-    // When say or erase ends, remove the caret.
+alba_theater
+  .on("*", function (eventName, originalEvent, sceneName, arg) {
+  })
+  .on("say:start, erase:start", function (eventName) {
+    var self    = this,
+        current = self.current.voice;
+    self.utils.addClass(current, "saying");
+  })
+  .on("say:end, erase:end", function (eventName) {
+    var self    = this,
+        current = self.current.voice;
     //self.utils.removeClass(current, "saying");
   });
 
 
-theater
+poet_theater
   .write("Poet:인공지능 시팔이", 1000)
   .write("Poet:시인 뉴럴")
+
+alba_theater
+  .write("Alba:인공지능 알바", 1000)
+  .write("Alba:뉴럴 알바")

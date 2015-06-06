@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="splash-container">
+  <div class="intro-bg">
+    <!--<div class="intro-bg-img" style="background-image: url('{{ url_for('static', filename='img/bg.jpg') }}')"></div>-->
+    <div class="intro-bg-img" style="background-color: #fbfff1"></div>
+  </div>
+  <div class="splash">
+    <h1 id="poet-title"></h1>
+    <br>
+    <br>
+    <p class="carpedm"><a href="https://carpedm20.github.io" target="_blank">@carpedm20</a></p>
+  </div>
+</div>
+
+<div class="content-wrapper poet-wrapper">
+  <div class="ribbon l-box-lrg pure-g" style="background-color: rgb(45, 62, 80)">
+    <div class="container pure-l-u-1-4" style="text-align: center;">
+      <h1 class="content-head content-head-ribbon">
+        <p class="myeongjo" style="display:inline;">시인 뉴럴</p>은 54,023개의 시를 읽고 배운 인공지능입니다.
+      </h1>
+      <h2 class="white">
+        현재까지 {{ max_count }}개의 시를 만들었습니다.
+      </h2>
+      <div class="l-box">
+        <h2 class="content-head-ribbon myeongjo" style="text-align: center; letter-spacing: 0.1em;">시 만들기</h2>
+        <form class="pure-form">
+          <input type="text" class="word-input" placeholder="시의 첫 단어를 입력하세요">
+          <button type="submit" class="pure-button pure-button-primary button-large">시를 뽑자</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="content content-intro pure-g">
+    <div class="container pure-u-md-1-2 pure-u-1-1">
+      {% autoescape false %}
+      {% for poet in poets[:-1] %}
+        {% if poet.text|length < 10 %}
+        <div class="poet" style="text-align: right;">
+        {% else %}
+        <div class="poet">
+        {% endif %}
+          <h3>{{ poet.date.strftime('%Y-%m-%d %H:%M:%S') }}</h3>
+          {% if not poet.head %}
+            <h2><a href="{{ url_for('poet_one', index=poet.index) }}">#{{ poet.index }}</a></h2>
+            {{ poet.text }}
+          {% else %}
+            <h2><a href="{{ url_for('poet_one', index=poet.index) }}">{{ poet.head }}</a></h2>
+            {{ poet.text }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <article id="next-article" class="page next content-hidden">
+    <div class="big-image" style="background-image: url({{ url_for('static', filename='img/'+footer) }}.jpg);">
+      <div class="inner">
+        <div class="fader">
+          <div class="myeongjo">
+            {% if poets[-1].index != 0 %}
+              <a class="goto-next">계속 읽기</a>
+            {% else %}
+              <a class="goto-next">마지막 시 입니다</a>
+            {% endif %}
+            <h1 class="title">{{ poets[-1].head }}</h1>
+            <h2 class="description">{{ poets[-1].short }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  {% endautoescape %}
+</div>
+
+<script>
+document.getElementById('next-article').onclick = function() {
+  window.location.href = "{{ url_for(action, index=next_idx) }}";
+};
+</script>
+
+{% endblock %}

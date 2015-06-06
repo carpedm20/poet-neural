@@ -1,4 +1,4 @@
-![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet.PNG)
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet.png)
 
 Poet born from Neural Network.
 
@@ -10,7 +10,11 @@ Demo
 
 [text demo](https://github.com/carpedm20/poet-neural/blob/master/demo.txt)
 
-![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/poet2.PNG)
+Results after 10% learning
+
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/demo1.png)
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/demo2.png)
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/demo3.png)
 
 
 Copyright

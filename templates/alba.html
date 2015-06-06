@@ -1,23 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="splash-container">
+  <div class="intro-bg">
+    <!--<div class="intro-bg-img" style="background-image: url('{{ url_for('static', filename='img/bg.jpg') }}')"></div>-->
+    <div class="intro-bg-img" style="background-color: #fbfff1"></div>
+  </div>
+  <div class="splash">
+    <h1 id="alba-title"></h1>
+    <br>
+    <br>
+    <p class="carpedm"><a href="https://carpedm20.github.io" target="_blank">@carpedm20</a></p>
+  </div>
+</div>
+
 <div class="content-wrapper">
   <div class="content content-intro">
-    <h2 class="content-head is-center">이상 백석 김소월... 54043편의 시를 읽고 배운 인공지능</h2>
+    <h2 class="content-head is-center">이상 백석 김소월... 54043편의 시를 읽고 배운 인공지능입니다</h2>
 
     <div class="pure-g">
       <div class="l-box pure-u-1 pure-u-md-1-2">
 
         <h3 class="content-subhead is-center">
           <i class="fa fa-rocket"></i>
-          Important than any others
+          인공지능은 보고
         </h3>
         <div class="content">
           <div class="intro-img-container1 is-center">
+            <img style="height:232px;" src="http://karpathy.github.io/assets/rnn/house_read.gif">
+            <img src="http://karpathy.github.io/assets/rnn/house_generate.gif">
           </div>
         </div>
         <p>
-        Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
         </p>
       </div>
       <div class="l-box pure-u-1 pure-u-md-1-2">
@@ -63,9 +77,9 @@
   </div>
 
   <div class="content content-intro">
-    <div class="pure-g">
+    <div class="container pure-g">
       {% for poet in poets %}
-        <article class="pure-u-1-2">
+        <article class="pure-u-lg-1-3 pure-u-md-1-2 pure-u-sm-1-1">
           <p>{{ poet }}</p>
         </article>
       {% endfor %}
