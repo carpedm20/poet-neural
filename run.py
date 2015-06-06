@@ -74,6 +74,16 @@ def get_items(items, index):
     if len(items) == 1:
         item_iter = items
 
+    tmp = nl2brlist(True, items[0]['text'].split('\n'), True)
+    items[0]['title'] = tmp[0].strip()
+    items[0]['short'] = ""
+
+    title_idx = 2
+    while len(items[0]['short']) < 30:
+        items[0]['short'] += tmp[title_idx] + " "
+        title_idx += 1
+    items[0]['short'] = items[0]['short'].strip() + "..."
+
     for idx, item in enumerate(item_iter):
         #tmp = item['text'].split('\n')
         tmp = nl2brlist(True, item['text'].split('\n'))
@@ -84,7 +94,7 @@ def get_items(items, index):
                 item['text'] = tmp
             except:
                 item['text'] = ""
-            item['head'] = False
+            item['head'] = "#%s" % (index+idx)
         else:
             item['text'] = '\n'.join(tmp.split('\n')[1:])
             item['head'] = head

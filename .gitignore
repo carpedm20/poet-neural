@@ -1,3 +1,4 @@
+*.vim
 
 #ipython
 *.ipynb_checkpoints/

@@ -11,6 +11,7 @@
     <br>
     <br>
     <p class="carpedm"><a href="https://carpedm20.github.io" target="_blank">@carpedm20</a></p>
+    <div class="fb-like" data-href="http://pail.unist.ac.kr/carpedm20/poet/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </div>
 </div>
 
@@ -42,13 +43,10 @@
         <div class="poet">
         {% endif %}
           <h3>{{ poet.date.strftime('%Y-%m-%d %H:%M:%S') }}</h3>
-          {% if not poet.head %}
-            <h2><a href="{{ url_for('poet_one', index=poet.index) }}">#{{ poet.index }}</a></h2>
-            {{ poet.text }}
-          {% else %}
-            <h2><a href="{{ url_for('poet_one', index=poet.index) }}">{{ poet.head }}</a></h2>
-            {{ poet.text }}
-          {% endif %}
+          <h2><a href="{{ url_for('poet_one', index=poet.index) }}">{{ poet.head }}</a></h2>
+          {{ poet.text }}
+          <a href="#"><i class="fa fa-heart"></i> 좋아요</a>
+          <div class="fb-share-button" data-href="http://pail.unist.ac.kr{{ url_for('poet_one', index=poet.index) }}" data-layout="button_count"></div>
         </div>
       {% endfor %}
     </div>
@@ -58,7 +56,7 @@
     <div class="big-image" style="background-image: url({{ url_for('static', filename='img/'+footer) }}.jpg);">
       <div class="inner">
         <div class="fader">
-          <div class="myeongjo">
+          <div class="text myeongjo">
             {% if poets[-1].index != 0 %}
               <a class="goto-next">계속 읽기</a>
             {% else %}

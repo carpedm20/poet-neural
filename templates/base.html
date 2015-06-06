@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>시인 뉴럴</title>
   <meta name="keywords" content="시인 뉴럴,머신러닝,인공지능,시팔이" />
-  <meta name="description" content="A data visualization of movie critics" />
+  <meta name="description" content="{{ poets[0].short }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="시인 뉴럴" />
+  <meta property="og:title" content="시인 뉴럴: {{ poets[0].title }}" />
   <meta property="og:url" content="http://pail.unist.ac.kr/carpedm20/poet/"/>
   <meta property="og:image" content="" />
   <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
@@ -34,6 +34,15 @@
 <![endif]-->
 </head>
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=776839839027483";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
   <div class="header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed container">
       <a class="pure-menu-heading" href="https://carpedm20.github.io" target="_blank">carpedm20</a>
