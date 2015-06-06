@@ -148,7 +148,7 @@ def get_items(items, index):
 
 def pagination(idx, best=False):
     if best:
-        col = poet_col.find({'like':{'$gte':1}}).sort('like')
+        col = poet_col.find({'like':{'$gte':1}}).sort([('like', pymongo.DESCENDING)])
     else:
         col = poet_col.find()
 
@@ -163,7 +163,9 @@ def pagination(idx, best=False):
         return []
         
     if best:
-        items = list(col.limit(count))
+        #items = list(col.find({'index':{'$gte':start_idx}}).limit(count))
+        #items = list(poet_col.find({'like':{'$gte':start_idx}}).sort([('like', pymongo.DESCENDING)]))
+        items = list(poet_col.find().sort([('like', pymongo.DESCENDING)]).limit(count))
     else:
         items = list(poet_col.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
 
