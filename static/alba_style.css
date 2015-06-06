@@ -133,11 +133,13 @@ body {
 }
 
 p.carpedm a {
-  font-size: 1.4em;
-  color: #284FCD;
   margin: 10px 0;
   text-transform: none !important;
   text-decoration: none !important;
+}
+p.carpedm {
+  font-size: 1.4em;
+  color: #284FCD;
 }
 
 article p {
