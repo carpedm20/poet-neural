@@ -1,7 +1,9 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from flask import Flask
-from flask import url_for, redirect, render_template, jsonify, session
+from flask import url_for, redirect, render_template, jsonify, session, request
+from subprocess import check_output
+
 
 PREFIX = "carpedm20"
 BASE_URL = "http://pail.unist.ac.kr/"
@@ -14,6 +16,7 @@ import re
 from glob import glob
 from jinja2 import evalcontextfilter, Markup, escape
 
+import datetime
 from random import randint
 from pymongo import MongoClient
 from collections import Counter
@@ -22,7 +25,7 @@ from konlpy.utils import pprint
 import hashlib
 
 from tags import tags as TAGS
-PAGE = 8
+PAGE = 5
 
 client = MongoClient('localhost', 27017)
 db = client['neural']
@@ -159,7 +162,7 @@ def pagination(idx, best=False):
     if best:
         items = list(col.limit(count))
     else:
-        items = list(collection.find({'index':{'$gte':start_idx}}).sort('like').limit(count))
+        items = list(collection.find({'index':{'$gte':start_idx}}).sort('index').limit(count))
 
     items.reverse()
 
@@ -191,6 +194,40 @@ def get_default_render(template, action, index, items):
         return redirect(url_for('poet'))
 
     return render_template(template, action=action, next_idx=index, poets=items, max_count=collection.count(), footer=str(randint(1,5)))
+
+@app.route('/%s/poet/make/' % PREFIX, methods=['GET', 'POST'])
+def make():
+    try:
+        seed = str(randint(1,1000000))
+        command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', '0.7']
+        if request.method == 'POST' and request.form['term']:
+            out = check_output(command + ['-term'] + [request.form['term']])
+            poets = re.sub('\n\n+', '\t', out).split('\t')
+            poet = request.form['term'].encode('utf-8') + poets[0]
+        else:
+            out = check_output(command)
+
+            poets = re.sub('\n\n+', '\t', out).split('\t')
+            try:
+                poet = poets[1]
+            except:
+                poet = "\n\n".join(poets[0].split('\n\n')[:-1])
+
+        idx = collection.count()
+
+        hash_object = hashlib.sha1(poet)
+        hex_dig = hash_object.hexdigest()
+
+        doc = {'text': poet.decode('utf-8'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+
+        _id = collection.insert(doc)
+        item = list(collection.find({'_id':_id}))[0]
+
+        data = {'success': True, 'index': item['index']}
+    except Exception as e:
+        data = {'success': False, 'msg': e}
+
+    return jsonify(**data)
 
 @app.route('/%s/alba/' % PREFIX)
 def alba():

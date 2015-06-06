@@ -1,3 +1,4 @@
+$("#spinner").hide();
 $(document).ready(function () {
     $(".like").click(function() {
         var poet = $(this);
@@ -12,6 +13,31 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+    $("form").submit(function(e) {
+        $("#submit-btn").hide();
+        $("#spinner").show();
+        $("#spinner").css('visibility', 'visible');
+        $("#spinner").css('position', 'relative');
+        e.preventDefault();
+        var data = $(this).serializeArray();
+        console.log(data);
+        $.ajax({
+            dataType: "json",
+            method: "POST",
+            url: '/carpedm20/poet/make/',
+            data: data,
+            success: function(data) {
+                window.location.href = "/carpedm20/poet/" + data['index'];
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+                $("#submit-btn").show();
+                $("#spinner").hide();
+                $("#spinner").css('position', 'absolute');
+            }
+        });
+        return false;
     });
 });
 

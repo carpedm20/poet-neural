@@ -18,6 +18,7 @@ body {
   /*font-family: 'Nanum Gothic', sans-serif;*/
   font-size: 10vw;
   line-height: 10vw;
+  height: 10vw;
   font-weight: normal;
   color: #ff4200;
   margin: 0;
@@ -131,7 +132,7 @@ body {
 
 p.carpedm a {
   font-size: 1.4em;
-  color: #00de1a;
+  color: #FF794A;
   margin: 10px 0;
   text-transform: none !important;
   text-decoration: none !important;
@@ -206,3 +207,63 @@ h1, h2 {
   margin-bottom: 15px !important;
   padding-top: 5px !important;
 }
+
+#submit-btn, #spinner{
+  left: 0;
+  right: 0;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  height: 40px;
+  top: 0;
+}
+
+#spinner {
+  top: 0;
+  position: absolute;
+  visibility: hidden;
+}
+
+.sk-spinner-wave.sk-spinner {
+  margin: 0 !important;
+}
+
+.sk-spinner-wave.sk-spinner {
+  width: 70px;
+  height: 40px;
+  text-align: center;
+  font-size: 26px; }
+.sk-spinner-wave div {
+  background-color: #FFF;
+  height: 100%;
+  width: 8px;
+  display: inline-block;
+  -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+          animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
+.sk-spinner-wave .sk-rect2 {
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s; }
+.sk-spinner-wave .sk-rect3 {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s; }
+.sk-spinner-wave .sk-rect4 {
+  -webkit-animation-delay: -0.9s;
+          animation-delay: -0.9s; }
+.sk-spinner-wave .sk-rect5 {
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s; }
+@-webkit-keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }
+@keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }
+

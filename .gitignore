@@ -1,4 +1,8 @@
 *.vim
+*.lua
+util
+weight*
+*.txt
 
 #ipython
 *.ipynb_checkpoints/

@@ -10,7 +10,7 @@
     <h1 id="poet-title"></h1>
     <br>
     <br>
-    <div class="fb-like" data-href="http://pail.unist.ac.kr/carpedm20/poet/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <div class="fb-like" style="height:23px; margin-top: 15px;" data-href="http://pail.unist.ac.kr/carpedm20/poet/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
     <p class="carpedm">
     <a class="myeongjo" href="{{ url_for('poet_best', index=1) }}" target="_blank">인기 시집 보기</a><br/>
     </p>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="content-wrapper poet-wrapper">
-  <div class="ribbon l-box-lrg pure-g" style="background-color: rgb(45, 62, 80)">
+  <div class="ribbon l-box-lrg pure-g" style="background-color: rgba(24, 24, 24, 0.9)">
     <div class="container pure-l-u-1-4" style="text-align: center;">
       <h1 class="content-head content-head-ribbon">
         <p class="myeongjo" style="display:inline;">시인 뉴럴</p>은 54,023개의 시를 읽고 배운 인공지능입니다.
@@ -26,11 +26,21 @@
       <h2 class="white">
         현재까지 {{ max_count }}개의 시를 만들었습니다.
       </h2>
+      <hr style="opacity: 0.5;">
       <div class="l-box">
         <h2 class="content-head-ribbon" style="text-align: center; letter-spacing: 0.1em;">어떤 시를 만들고 싶은가요?</h2>
         <form class="pure-form">
-          <input type="text" class="word-input" placeholder="시의 첫 단어를 입력하세요">
-          <button type="submit" class="pure-button pure-button-primary button-large">시 만들기</button>
+          <input type="text" class="word-input" name="term" placeholder="시의 첫 단어를 입력하세요">
+          <div style="position: relative; width: 100%;">
+            <button id="submit-btn" type="submit" class="pure-button pure-button-primary button-large">시 만들기</button>
+            <div id="spinner" class="sk-spinner sk-spinner-wave">
+              <div class="sk-rect1"></div>
+              <div class="sk-rect2"></div>
+              <div class="sk-rect3"></div>
+              <div class="sk-rect4"></div>
+              <div class="sk-rect5"></div>
+            </div>
+          </div>
         </form>
       </div>
     </div>
