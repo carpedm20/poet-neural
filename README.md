@@ -8,7 +8,7 @@ Multi-layer LSTM for character-level language models in Torch (based on [this po
 Screenshot
 ----------
 
-![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/screenshot1.png)
+![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/screenshot5.png)
 ![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/screenshot2.png)
 ![alt_tag](https://raw.githubusercontent.com/carpedm20/poet-neural/master/contents/screenshot3.png)
 
