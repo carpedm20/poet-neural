@@ -5,6 +5,7 @@
 @import url(https://cdn.rawgit.com/openhiun/hangul/14c0f6faa2941116bb53001d6a7dcd5e82300c3f/nanumbarungothic.css);
 @import url(//cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
 body {
   color: #333 !important;
@@ -12,11 +13,11 @@ body {
 }
 
 .myeongjo {
-  font-family: 'Nanum Barun Gothic', sans-serif;
+  font-family: 'Nanum Pen Script', cursive;
 }
 
 #alba-title, #poet-title {
-  font-family: 'Nanum Barun Gothic', sans-serif;
+  font-family: 'Nanum Pen Script', cursive;
   /*font-family: 'Nanum Gothic', sans-serif;*/
   font-size: 10vw;
   line-height: 10vw;

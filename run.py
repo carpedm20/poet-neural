@@ -19,11 +19,15 @@ from jinja2 import evalcontextfilter, Markup, escape
 import datetime
 import pymongo
 from random import randint
+from random import random
 from pymongo import MongoClient
 from collections import Counter
 from konlpy.tag import Kkma
 from konlpy.utils import pprint
 import hashlib
+
+def rand_temp():
+    return str(random()*0.3+0.3)
 
 from tags import tags as TAGS
 PAGE = 5
@@ -203,7 +207,7 @@ def get_default_render(template, action, index, items):
 @app.route('/%s/poet/make_/' % PREFIX, methods=['GET', 'POST'])
 def make_():
     seed = str(randint(1,1000000))
-    command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', '0.7']
+    command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', rand_temp()]
     out = check_output(command)
 
     poets = re.sub('\n\n+', '\t', out).split('\t')
@@ -230,12 +234,17 @@ def make_():
 
     return redirect(url_for('poet_one', index = item['index']))
 
+def llog(text):
+    with open('log.txt','a') as f:
+        f.write("%s\n" % str(text))
+
 @app.route('/%s/poet/make/' % PREFIX, methods=['GET', 'POST'])
 def make(redirect=False):
     try:
         seed = str(randint(1,1000000))
-        command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', '0.7']
+        command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', rand_temp()]
         if request.method == 'POST' and request.form['term']:
+            #llog(request.form['term'])
             out = check_output(command + ['-term'] + [request.form['term']])
             poets = re.sub('\n\n+', '\t', out).split('\t')
             poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
@@ -294,9 +303,10 @@ def alba_load(index):
 @app.route('/%s/alba/make/' % PREFIX, methods=['GET', 'POST'])
 def alba_make():
     seed = str(randint(1,1000000))
-    command = ['th', 'extract.lua', 'movie_weight.bin','-length', '200', '-seed', seed, '-temp', '0.5']
+    command = ['th', 'extract.lua', 'movie_weight.bin','-length', '200', '-seed', seed, '-temp', rand_temp()]
 
     if request.method == 'POST' and request.form['term']:
+        #llog(" = " + request.form['term'])
         out = check_output(command + ['-term'] + [request.form['term']])
         reviews = (request.form['term'] + out.decode('utf-8', 'ignore')).split('\n')
     else:
