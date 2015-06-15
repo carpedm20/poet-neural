@@ -245,7 +245,8 @@ def make(redirect=False):
         command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', rand_temp()]
         if request.method == 'POST' and request.form['term']:
             #llog(request.form['term'])
-            out = check_output(command + ['-term'] + [request.form['term']])
+            command = command + ['-term'] + [request.form['term']]
+            out = check_output(command)
             poets = re.sub('\n\n+', '\t', out).split('\t')
             poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
         else:
@@ -262,6 +263,9 @@ def make(redirect=False):
                         continue
                     else:
                         break
+
+        if poet.strip() == "":
+            poet = "\n".join(poets[0].split("\n")[:-1])
 
         idx = poet_col.count()
 

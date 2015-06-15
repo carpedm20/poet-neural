@@ -26,7 +26,7 @@ def get_poets():
     return re.sub('\n\n+', '\t', string).split('\t')
 
 def get_reviews():
-    with open('out.txt') as f:
+    with open('movie_out.txt') as f:
         string = f.read().decode('utf-8', 'ignore')
     return string.split('\n')
 
