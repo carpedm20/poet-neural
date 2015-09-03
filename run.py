@@ -238,6 +238,53 @@ def llog(text):
     with open('log.txt','a') as f:
         f.write("%s\n" % str(text))
 
+@app.route('/%s/poet/get/<prefix>' % PREFIX)
+def get_poet(prefix, redirect=False):
+    try:
+        seed = str(randint(1,10000))
+        command = ['th', 'extract.lua', 'weight.bin','-length', '200', '-seed', seed, '-temp', rand_temp()]
+        if prefix:
+            command = command + ['-term'] + [prefix]
+            out = check_output(command)
+            poets = re.sub('\n\n+', '\t', out).split('\t')
+            poet = prefix.encode('utf-8', 'ignore') + poets[0]
+
+            if poet.strip() == "":
+                poet = prefix.encode('utf-8', 'ignore') +"\n".join(poets[0].split("\n")[:-2])
+        else:
+            out = check_output(command)
+
+            poets = re.sub('\n\n+', '\t', out).split('\t')
+            try:
+                poet = poets[1]
+            except:
+                for poet_text in poets:
+                    poet = "\n\n".join(poet_text.split('\n\n')[:-2])
+
+                    if poet.strip() == "":
+                        continue
+                    else:
+                        break
+
+            if poet.strip() == "":
+                poet = "\n".join(poets[0].split("\n")[:-1])
+
+        with open('test.txt','w') as f:
+            f.write(out)
+
+        idx = poet_col.count()
+
+        hash_object = hashlib.sha1(poet)
+        hex_dig = hash_object.hexdigest()
+
+        doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+
+        data = poet.decode('utf-8', 'ignore')
+    except Exception as e:
+        data = ""
+
+    return ">" + "\n>".join(data.split("\n")[:-2])
+
 @app.route('/%s/poet/make/' % PREFIX, methods=['GET', 'POST'])
 def make(redirect=False):
     try:
@@ -249,6 +296,9 @@ def make(redirect=False):
             out = check_output(command)
             poets = re.sub('\n\n+', '\t', out).split('\t')
             poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
+
+            if poet.strip() == "":
+                poet = request.form['term'].encode('utf-8', 'ignore') +"\n".join(poets[0].split("\n")[:-2])
         else:
             out = check_output(command)
 
@@ -257,15 +307,24 @@ def make(redirect=False):
                 poet = poets[1]
             except:
                 for poet_text in poets:
-                    poet = "\n\n".join(poet_text.split('\n\n')[:-1])
+                    poet = "\n\n".join(poet_text.split('\n\n')[:-2])
 
                     if poet.strip() == "":
                         continue
                     else:
                         break
 
-        if poet.strip() == "":
-            poet = "\n".join(poets[0].split("\n")[:-1])
+            if poet.strip() == "":
+                poet = "\n".join(poets[0].split("\n")[:-1])
+
+        with open('test.txt','w') as f:
+            f.write(out)
+
+        """parts = poet.split("\n")
+        try:
+            poet = "\n".join(parts[:randint(2, len(parts))])
+        except:
+            pass"""
 
         idx = poet_col.count()
 
