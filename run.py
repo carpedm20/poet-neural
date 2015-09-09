@@ -27,7 +27,7 @@ from konlpy.utils import pprint
 import hashlib
 
 def rand_temp():
-    return str(random()*0.3+0.3)
+    return str(random()*0.3+0.5)
 
 from tags import tags as TAGS
 PAGE = 5
@@ -117,7 +117,10 @@ def get_items(items, index):
 
     for idx in [0, -1]:
         item = items[idx]
-        tmp = nl2brlist(True, item['text'].split('\n'), True)
+        try:
+            tmp = nl2brlist(True, item['text'].split('\n'), True)
+        except:
+            tmp = nl2brlist(True, "".split('\n'), True)
         item['title'] = tmp[0].strip()
         item['short'] = ""
 
@@ -132,7 +135,10 @@ def get_items(items, index):
 
     for idx, item in enumerate(item_iter):
         #tmp = item['text'].split('\n')
-        tmp = nl2brlist(True, item['text'].split('\n'))
+        try:
+            tmp = nl2brlist(True, item['text'].split('\n'))
+        except:
+            tmp = nl2brlist(True, "".split('\n'))
         head = tmp.split('\n')[0]
 
         if len(head) > 28:
@@ -238,11 +244,12 @@ def llog(text):
     with open('log.txt','a') as f:
         f.write("%s\n" % str(text))
 
+@app.route('/%s/poet/get/' % PREFIX)
 @app.route('/%s/poet/get/<prefix>' % PREFIX)
-def get_poet(prefix, redirect=False):
+def get_poet(prefix="", redirect=False):
     try:
         seed = str(randint(1,10000))
-        command = ['th', 'extract.lua', 'weight.bin','-length', '200', '-seed', seed, '-temp', rand_temp()]
+        command = ['th', 'extract.lua', 'weight.bin','-length', '150', '-seed', seed, '-temp', rand_temp()]
         if prefix:
             command = command + ['-term'] + [prefix]
             out = check_output(command)
@@ -288,34 +295,66 @@ def get_poet(prefix, redirect=False):
 @app.route('/%s/poet/make/' % PREFIX, methods=['GET', 'POST'])
 def make(redirect=False):
     try:
-        seed = str(randint(1,1000000))
-        command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', rand_temp()]
-        if request.method == 'POST' and request.form['term']:
-            #llog(request.form['term'])
-            command = command + ['-term'] + [request.form['term']]
-            out = check_output(command)
-            poets = re.sub('\n\n+', '\t', out).split('\t')
-            poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
+        seed = str(randint(1,10000))
+        print "SEED: %s" % seed
+        if seed > 3000:
+            poet_length = str(randint(300,800))
+            command = ['th', 'extract.lua', 'weight.bin','-length', poet_length, '-seed', seed, '-temp', rand_temp()]
+            if request.method == 'POST' and request.form['term']:
+                prefix = request.form['term']
 
-            if poet.strip() == "":
-                poet = request.form['term'].encode('utf-8', 'ignore') +"\n".join(poets[0].split("\n")[:-2])
+                command = command + ['-term'] + [prefix]
+                out = check_output(command)
+                poets = re.sub('\n\n+', '\t', out).split('\t')
+                poet = prefix.encode('utf-8', 'ignore') + poets[0]
+
+                if poet.strip() == "":
+                    poet = prefix.encode('utf-8', 'ignore') +"\n".join(poets[0].split("\n")[:-2])
+            else:
+                out = check_output(command)
+
+                poets = re.sub('\n\n+', '\t', out).split('\t')
+                try:
+                    poet = poets[1]
+                except:
+                    for poet_text in poets:
+                        poet = "\n\n".join(poet_text.split('\n\n')[:-2])
+
+                        if poet.strip() == "":
+                            continue
+                        else:
+                            break
+
+                if poet.strip() == "":
+                    poet = "\n".join(poets[0].split("\n")[:-1])
         else:
-            out = check_output(command)
+            command = ['th', 'extract.lua', 'weight.bin','-length', '2000', '-seed', seed, '-temp', rand_temp()]
+            if request.method == 'POST' and request.form['term']:
+                #llog(request.form['term'])
+                command = command + ['-term'] + [request.form['term']]
+                out = check_output(command)
+                poets = re.sub('\n\n+', '\t', out).split('\t')
+                poet = request.form['term'].encode('utf-8', 'ignore') + poets[0]
 
-            poets = re.sub('\n\n+', '\t', out).split('\t')
-            try:
-                poet = poets[1]
-            except:
-                for poet_text in poets:
-                    poet = "\n\n".join(poet_text.split('\n\n')[:-2])
+                if poet.strip() == "":
+                    poet = request.form['term'].encode('utf-8', 'ignore') +"\n".join(poets[0].split("\n")[:-2])
+            else:
+                out = check_output(command)
 
-                    if poet.strip() == "":
-                        continue
-                    else:
-                        break
+                poets = re.sub('\n\n+', '\t', out).split('\t')
+                try:
+                    poet = poets[1]
+                except:
+                    for poet_text in poets:
+                        poet = "\n\n".join(poet_text.split('\n\n')[:-2])
 
-            if poet.strip() == "":
-                poet = "\n".join(poets[0].split("\n")[:-1])
+                        if poet.strip() == "":
+                            continue
+                        else:
+                            break
+
+                if poet.strip() == "":
+                    poet = "\n".join(poets[0].split("\n")[:-1])
 
         with open('test.txt','w') as f:
             f.write(out)
@@ -331,7 +370,12 @@ def make(redirect=False):
         hash_object = hashlib.sha1(poet)
         hex_dig = hash_object.hexdigest()
 
-        doc = {'text': poet.decode('utf-8', 'ignore'), 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
+        poet = poet.decode('utf-8', 'ignore')
+        poet = "\n".join(poet.split("\n")[:-2])
+        print"==================================="
+        print poet
+
+        doc = {'text': poet, 'index': idx, 'tags': [], 'hex': hex_dig, 'like': 0, 'date': datetime.datetime.utcnow()}
 
         _id = poet_col.insert(doc)
         item = list(poet_col.find({'_id':_id}))[0]
